@@ -6,7 +6,11 @@
 //
 
 public class Output {
-	private let formatter = OutputFormatter()
+	private let formatter: OutputFormatter
+
+	public init(formatter: OutputFormatter = OutputFormatter()) {
+		self.formatter = formatter
+	}
 
 	public func writeln(message: String) {
 		self.writeln([message])
