@@ -6,8 +6,6 @@
 //  Adopted from Symfony: https://github.com/symfony/console/blob/40b3aca/Formatter/OutputFormatter.php
 //
 
-import Foundation
-
 public class OutputFormatter {
 	public var decorated: Bool
 	private var styles = Dictionary<String, OutputFormatterStyle>()
@@ -28,7 +26,7 @@ public class OutputFormatter {
 
 	public class func escapeText(text: String) -> String {
 		// TODO: Replace with regex when NSRegularExpression is available.
-		return text.stringByReplacingOccurrencesOfString("<", withString: "\\<").stringByReplacingOccurrencesOfString("\\\\<", withString: "\\<")
+		return text.replace("<", with: "\\<").replace("\\\\<", with: "\\<")
 	}
 
 	public func setStyle(name: String, style: OutputFormatterStyle) {
@@ -61,14 +59,14 @@ public class OutputFormatter {
 
 				let endRange: Range<String.Index>
 
-				if let range = output.rangeOfString(close, range: Range(start: openRange.endIndex, end: output.endIndex)) {
+				if let range = output.rangeOfString(close, range: openRange.endIndex..<output.endIndex) {
 					endRange = range
 				} else {
-					endRange = Range(start: output.endIndex, end: output.endIndex)
+					endRange = output.endIndex..<output.endIndex
 				}
 
-				let text = output.substringWithRange(Range<String.Index>(start: openRange.endIndex, end: endRange.startIndex))
-				output.replaceRange(Range<String.Index>(start: openRange.startIndex, end: endRange.endIndex), with: self.applyStyle(text, style: style))
+				let text = output[openRange.endIndex..<endRange.startIndex]
+				output.replaceRange(openRange.startIndex..<endRange.endIndex, with: self.applyStyle(text, style: style))
 			}
 		}
 
