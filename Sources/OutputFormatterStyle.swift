@@ -104,7 +104,18 @@ public class OutputFormatterStyle {
 		if setCodes.count == 0 {
 			return text
 		} else {
-			return "\u{001B}[\(setCodes.joinWithSeparator(";"))m\(text)\u{001B}[\(unsetCodes.joinWithSeparator(";"))m"
+			let set: String
+			let unset: String
+
+			#if swift(>=3.0)
+				set = setCodes.joined(separator: ";")
+				unset = unsetCodes.joined(separator: ";")
+			#else
+				set = setCodes.joinWithSeparator(";")
+				unset = unsetCodes.joinWithSeparator(";")
+			#endif
+
+			return "\u{001B}[\(set)m\(text)\u{001B}[\(unset)m"
 		}
 	}
 

@@ -30,15 +30,15 @@ public class OutputFormatter {
 	}
 
 	public func setStyle(name: String, style: OutputFormatterStyle) {
-		self.styles[name.lowercaseString] = style
+		self.styles[name.lowercased()] = style
 	}
 
 	public func hasStyle(name: String) -> Bool {
-		return self.styles[name.lowercaseString] != nil
+		return self.styles[name.lowercased()] != nil
 	}
 
 	public func getStyle(name: String) -> OutputFormatterStyle? {
-		return self.styles[name.lowercaseString]
+		return self.styles[name.lowercased()]
 	}
 
 	public func format(message: String) -> String {
@@ -66,7 +66,7 @@ public class OutputFormatter {
 				}
 
 				let text = output[openRange.endIndex..<endRange.startIndex]
-				output.replaceRange(openRange.startIndex..<endRange.endIndex, with: self.applyStyle(text, style: style))
+				output.replaceSubrange(openRange.startIndex..<endRange.endIndex, with: self.applyStyle(text, style: style))
 			}
 		}
 

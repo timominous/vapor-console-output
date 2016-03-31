@@ -17,7 +17,7 @@ extension String {
 		var out = self
 
 		while let range = out.rangeOfString(target) {
-			out.replaceRange(range, with: replacement)
+			out.replaceSubrange(range, with: replacement)
 		}
 
 		return out
@@ -36,8 +36,8 @@ extension String {
 				let p = strstr(targetBytes, strBytes)
 
 				if p != nil {
-					index = target.startIndex.advancedBy(p - UnsafeMutablePointer<Int8>(targetBytes))
-					index = self.startIndex.advancedBy(self.startIndex.distanceTo(range.startIndex)).advancedBy(target.startIndex.distanceTo(index!))
+					index = target.startIndex.advanced(by: p - UnsafeMutablePointer<Int8>(targetBytes))
+					index = self.startIndex.advanced(by: self.startIndex.distance(to: range.startIndex)).advanced(by: target.startIndex.distance(to: index!))
 				}
 			}
 		}
@@ -46,7 +46,7 @@ extension String {
 			return nil
 		}
 
-		return startIndex..<startIndex.advancedBy(str.characters.count)
+		return startIndex..<startIndex.advanced(by: str.characters.count)
 	}
 
 }
