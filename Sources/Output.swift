@@ -12,12 +12,18 @@ public class Output {
 		self.formatter = formatter
 	}
 
+	@available(*, deprecated:0.2, renamed:"write", message:"Use write instead")
 	public func writeln(message: String) {
 		self.writeln([message])
 	}
 
+	@available(*, deprecated:0.2, renamed:"write", message:"Use write instead")
 	public func writeln(messages: [String]) {
 		self.write(messages, newLine: true);
+	}
+
+	public func write(message: String, newLine: Bool = true) {
+		self.write([message], newLine: newLine)
 	}
 
 	public func write(messages: [String], newLine: Bool = true) {
